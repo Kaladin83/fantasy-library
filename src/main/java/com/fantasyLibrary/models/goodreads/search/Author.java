@@ -1,16 +1,17 @@
-package com.fantasyLibrary.models;
+package com.fantasyLibrary.models.goodreads.search;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "author")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Author {
 	@XmlElement(name="id")
 	private int id;
 	
 	@XmlElement(name="name")
 	private String name;
-
+	
 	public int getId() {
 		return id;
 	}

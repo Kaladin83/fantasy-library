@@ -1,12 +1,14 @@
-package com.fantasyLibrary.models;
+package com.fantasyLibrary.models.goodreads.search;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "book")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Book {
+	
 	@XmlElement(name="id")
-	private int id;
+	private Integer id;
 	
 	@XmlElement(name="title")
 	private String title;
@@ -15,16 +17,16 @@ public class Book {
 	private Author author;
 	
 	@XmlElement(name="image_url")
-	private String imageUrl;
+	private Integer imageUrl;
 	
 	@XmlElement(name="small_image_url")
 	private String smallImageUrl;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -44,11 +46,11 @@ public class Book {
 		this.author = author;
 	}
 
-	public String getImageUrl() {
+	public Integer getImageUrl() {
 		return imageUrl;
 	}
 
-	public void setImageUrl(String imageUrl) {
+	public void setImageUrl(Integer imageUrl) {
 		this.imageUrl = imageUrl;
 	}
 

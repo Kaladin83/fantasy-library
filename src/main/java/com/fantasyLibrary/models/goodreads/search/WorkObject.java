@@ -1,33 +1,34 @@
-package com.fantasyLibrary.models;
+package com.fantasyLibrary.models.goodreads.search;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "work")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class WorkObject {
 	@XmlElement(name="id")
 	private int id;
 	
 	@XmlElement(name="books_count")
-	private int booksCount;
+	private Integer booksCount;
 	
 	@XmlElement(name="ratings_count")
-	private int ratingsCount;
+	private Integer ratingsCount;
 	
 	@XmlElement(name="text_reviews_count")
-	private int textReviewsCount;
+	private Integer textReviewsCount;
 	
 	@XmlElement(name="original_publication_year")
-	private int originalPublicationYear;
+	private Integer originalPublicationYear;
 	
 	@XmlElement(name="original_publication_month")
-	private int originalPublicationMonth;
+	private Integer originalPublicationMonth;
 	
 	@XmlElement(name="original_publication_day")
-	private int originalPublicationDay;
+	private Integer originalPublicationDay;
 	
 	@XmlElement(name="average_rating")
-	private int averageRating;
+	private Float averageRating;
 	
 	@XmlElement(name="best_book")
 	private Book bestBook;
@@ -48,51 +49,51 @@ public class WorkObject {
 		this.booksCount = booksCount;
 	}
 
-	public int getRatingsCount() {
+	public Integer getRatingsCount() {
 		return ratingsCount;
 	}
 
-	public void setRatingsCount(int ratingsCount) {
+	public void setRatingsCount(Integer ratingsCount) {
 		this.ratingsCount = ratingsCount;
 	}
 
-	public int getTextReviewsCount() {
+	public Integer getTextReviewsCount() {
 		return textReviewsCount;
 	}
 
-	public void setTextReviewsCount(int textReviewsCount) {
+	public void setTextReviewsCount(Integer textReviewsCount) {
 		this.textReviewsCount = textReviewsCount;
 	}
 
-	public int getOriginalPublicationYear() {
+	public Integer getOriginalPublicationYear() {
 		return originalPublicationYear;
 	}
 
-	public void setOriginalPublicationYear(int originalPublicationYear) {
+	public void setOriginalPublicationYear(Integer originalPublicationYear) {
 		this.originalPublicationYear = originalPublicationYear;
 	}
 
-	public int getOriginalPublicationMonth() {
+	public Integer getOriginalPublicationMonth() {
 		return originalPublicationMonth;
 	}
 
-	public void setOriginalPublicationMonth(int originalPublicationMonth) {
+	public void setOriginalPublicationMonth(Integer originalPublicationMonth) {
 		this.originalPublicationMonth = originalPublicationMonth;
 	}
 
-	public int getOriginalPublicationDay() {
+	public Integer getOriginalPublicationDay() {
 		return originalPublicationDay;
 	}
 
-	public void setOriginalPublicationDay(int originalPublicationDay) {
+	public void setOriginalPublicationDay(Integer originalPublicationDay) {
 		this.originalPublicationDay = originalPublicationDay;
 	}
 
-	public int getAverageRating() {
+	public Float getAverageRating() {
 		return averageRating;
 	}
 
-	public void setAverageRating(int averageRating) {
+	public void setAverageRating(Float averageRating) {
 		this.averageRating = averageRating;
 	}
 
