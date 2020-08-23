@@ -23,6 +23,11 @@ import com.fantasyLibrary.models.db.AuthorRoles;
 import com.fantasyLibrary.models.db.Book;
 import com.fantasyLibrary.models.db.Edition;
 import com.fantasyLibrary.models.db.Series;
+import com.fantasyLibrary.models.db.clone.CloneAuthor;
+import com.fantasyLibrary.models.db.clone.CloneAuthorRoles;
+import com.fantasyLibrary.models.db.clone.CloneBook;
+import com.fantasyLibrary.models.db.clone.CloneEdition;
+import com.fantasyLibrary.models.db.clone.CloneSeries;
 import com.fantasyLibrary.models.response.AuthorDetails;
 import com.fantasyLibrary.models.response.BookDetails;
 import com.fantasyLibrary.models.response.Genre;
@@ -32,44 +37,43 @@ import com.fantasyLibrary.repos.AuthorRolesRepository;
 import com.fantasyLibrary.repos.BookRepository;
 import com.fantasyLibrary.repos.EditionRepository;
 import com.fantasyLibrary.repos.SeriesRepository;
+import com.fantasyLibrary.repos.clone.CloneAuthorRepository;
+import com.fantasyLibrary.repos.clone.CloneAuthorRolesRepository;
+import com.fantasyLibrary.repos.clone.CloneBookRepository;
+import com.fantasyLibrary.repos.clone.CloneEditionRepository;
+import com.fantasyLibrary.repos.clone.CloneSeriesRepository;
 
 @Service
-public class ClientService {
+public class CloneClientService {
 	
 	@Autowired
-	private BookRepository booksRepo;
+	private CloneBookRepository cloneBooksRepo;
 	
 	@Autowired
-	private AuthorRepository authorRepo;
+	private CloneAuthorRepository cloneAuthorRepo;
 	
 	@Autowired
-	private EditionRepository editionRepo;
+	private CloneEditionRepository cloneEditionRepo;
 	
 	@Autowired
-	private SeriesRepository seriesRepo;
+	private CloneSeriesRepository cloneSeriesRepo;
 	
 	@Autowired
-	private AuthorRolesRepository authorRolesRepo;
+	private CloneAuthorRolesRepository cloneAuthorRolesRepo;
 	
 	private Set<Long> setOfRoles = new HashSet<Long>();
 	
-	private Map<Long, Author> mapOfAuthors = new HashMap<Long, Author>();
+	private Map<Long, CloneAuthor> mapOfAuthors = new HashMap<Long, CloneAuthor>();
 	
 	private Map<Long, String> mapOfRoles = new HashMap<Long, String>();
 	
 	private Map<Long, String> mapOfGenres = new HashMap<Long, String>();
-
-	public List<Response> getAllBooksTemp() {
+	
+	public List<Response> getAllAuthors() {
 		Utils.printTime("Start");
-		List<Series> series = (List<Series>) seriesRepo.findAll();
-		List<Book> books = (List<Book>) booksRepo.findAll();
-		
-		mapOfAuthors = populateMapOfAuthors(books);
+		mapOfAuthors = populateMapOfAuthorsOnly();
 		mapOfRoles = populateMapOfRoles();
-		
-		List<BookDetails> booksWithDetails = books.stream()
-				.map(b-> mapToBookDetails(b, series))
-			.collect(toList());
+		List<BookDetails> booksWithDetails = new ArrayList<BookDetails>();
 		
 		List<Response> responses = mapOfAuthors.entrySet().stream()
 			.map(a-> populateResponse(booksWithDetails, a))
@@ -78,12 +82,12 @@ public class ClientService {
 		Utils.printTime("End");
 		
 		return responses;
-	}	
-	
+	}
+
 	public List<Response> getAllBooks() {
 		Utils.printTime("Start");
-		List<Series> series = (List<Series>) seriesRepo.findAll();
-		List<Book> books = (List<Book>) booksRepo.findAll();
+		List<CloneSeries> series = (List<CloneSeries>) cloneSeriesRepo.findAll();
+		List<CloneBook> books = (List<CloneBook>) cloneBooksRepo.findAll();
 		
 		mapOfAuthors = populateMapOfAuthors(books);
 		mapOfRoles = populateMapOfRoles();
@@ -94,26 +98,32 @@ public class ClientService {
 		
 		List<Response> responses = mapOfAuthors.entrySet().stream()
 			.map(a-> populateResponse(booksWithDetails, a))
+			.filter(s-> s.getBooks() != null && s.getBooks().size() > 0)
 			.collect(toList());
 		
 		Utils.printTime("End");
 		
 		return responses;
-	}	
+	}
 	
-	private Map<Long, Author> populateMapOfAuthors(List<Book> books) {
+	private Map<Long, CloneAuthor> populateMapOfAuthorsOnly() {
+		List<CloneAuthor> authors = (List<CloneAuthor>)cloneAuthorRepo.findAll();
+		return authors.stream().collect(toMap(CloneAuthor::getGoodreadsId, a-> a));
+	}
+	
+	private Map<Long, CloneAuthor> populateMapOfAuthors(List<CloneBook> books) {
 		return books.stream()
 				.flatMap(s-> getAuthorCodes(s.getListOfAuthors()).stream())
 				.distinct()
 				.map(this::mapToAuthorDetails)
-				.collect(toMap(Author::getGoodreadsId, a-> a));
+				.collect(toMap(CloneAuthor::getGoodreadsId, a-> a));
 	}
 	
 	private Map<Long, String> populateMapOfRoles() {
-		List<AuthorRoles> roles = (List<AuthorRoles>) authorRolesRepo.findAll();
+		List<CloneAuthorRoles> roles = (List<CloneAuthorRoles>) cloneAuthorRolesRepo.findAll();
 		
 		return roles.stream()
-				.collect(toMap(AuthorRoles::getId, s-> s.getRole().equals("")? "Author": s.getRole()));
+				.collect(toMap(CloneAuthorRoles::getId, s-> s.getRole().equals("")? "Author": s.getRole()));
 	}
 
 	private List<String> getAuthorCodes(String codes){
@@ -128,18 +138,18 @@ public class ClientService {
 		return code.split("[|]")[0];
 	}
 	
-	private Author mapToAuthorDetails(String authorCode) {
-		return authorRepo.findById(Long.valueOf(getAuthorCode(authorCode))).orElse(new Author());
+	private CloneAuthor mapToAuthorDetails(String authorCode) {
+		return cloneAuthorRepo.findById(Long.valueOf(getAuthorCode(authorCode))).orElse(new CloneAuthor());
 	}
 	
 	private String[] splitSequence(String sequence) {
 		return sequence.split(", ");
 	}
 	
-	private BookDetails mapToBookDetails(Book book, List<Series> series) {
+	private BookDetails mapToBookDetails(CloneBook book, List<CloneSeries> series) {
+		String[] genres = book.getListOfGenres().split(", ");
 		BookDetails details = new BookDetails();
 		String[] sequence = splitSequence(book.getSequence());
-		
 		
 		details.setAverageRating(book.getAverageRating());
 		details.setDescription(book.getDescription());
@@ -160,15 +170,15 @@ public class ClientService {
 		return details;
 	}
 
-	private List<com.fantasyLibrary.models.response.Edition> fetchEditions(Book book) {
-		List<Edition> editions = editionRepo.findByBookId(book.getId());
+	private List<com.fantasyLibrary.models.response.Edition> fetchEditions(CloneBook book) {
+		List<CloneEdition> editions = cloneEditionRepo.findByBookId(book.getId());
 
 		return editions.stream()
 				.map(this::mapEditions)
 				.collect(toList());
 	}
 	
-	private com.fantasyLibrary.models.response.Edition mapEditions(Edition e){
+	private com.fantasyLibrary.models.response.Edition mapEditions(CloneEdition e){
 		com.fantasyLibrary.models.response.Edition edition = 
 				new com.fantasyLibrary.models.response.Edition();
 		edition.setFormat(e.getFormat());
@@ -180,7 +190,7 @@ public class ClientService {
 		return edition;
 	}
 	
-	private List<com.fantasyLibrary.models.response.Series> getSeries(Book book, List<Series> series_) {
+	private List<com.fantasyLibrary.models.response.Series> getSeries(CloneBook book, List<CloneSeries> series_) {
 		String[] splitSeries = book.getListOfSeries().split(", ");
 		 
 		return IntStream.range(0, splitSeries.length)
@@ -189,11 +199,11 @@ public class ClientService {
 					.collect(toList());
 	}
 	
-	private com.fantasyLibrary.models.response.Series createSeries(Series s){
+	private com.fantasyLibrary.models.response.Series createSeries(CloneSeries s){
 		return new com.fantasyLibrary.models.response.Series(s.getId(), s.getName());
 	}
 	
-	private List<String> getCovers(Book book) {
+	private List<String> getCovers(CloneBook book) {
 		String[] covers = book.getCovers().split(", ");
 		
 		return IntStream.range(0, covers.length)
@@ -203,7 +213,7 @@ public class ClientService {
 	
 	private String createCover(String coverId) {
 		return !coverId.contains("/")? Cover.OL_PREFIX.value() + coverId + Cover.OL_SUFIX.value():
-					Cover.GR_PREFIX.value() + coverId + Cover.GR_SUFIX_CHANGE.value();
+					Cover.GR_PREFIX.value() + coverId;
 	}
 	
 	private List<Genre> mapToGenres(String listOfGenres) {
@@ -219,7 +229,7 @@ public class ClientService {
 		return new Genre(splitGenre[0], Integer.parseInt(splitGenre[1]));
 	}
 	
-	private Response populateResponse(List<BookDetails> books, Map.Entry<Long, Author> author) {
+	private Response populateResponse(List<BookDetails> books, Map.Entry<Long, CloneAuthor> author) {
 		setOfRoles.clear();
 		Response response = new Response(); 
 		List<BookDetails> booksWithDetails = getBooksPerAuthor(books, author.getValue());
@@ -231,7 +241,7 @@ public class ClientService {
 		return response;
 	}
 
-	private List<BookDetails> getBooksPerAuthor(List<BookDetails> books, Author author) {
+	private List<BookDetails> getBooksPerAuthor(List<BookDetails> books, CloneAuthor author) {
 		return books.stream()
 				.filter(b-> findAuthor(b.getAuthors(), author.getGoodreadsId()))
 				.map(this::translateAuthorsCode)
@@ -245,7 +255,7 @@ public class ClientService {
 				.anyMatch(i -> getAuthorCode(splitAuthors[i]).equals(author+""));
 	}
 
-	private AuthorDetails populateAuthorDetails(Author author) {
+	private AuthorDetails populateAuthorDetails(CloneAuthor author) {
 		AuthorDetails authorDetails = new AuthorDetails();
 		
 		authorDetails.setFirstName(author.getFirstName());
@@ -262,7 +272,7 @@ public class ClientService {
 		authorDetails.setTopGenres(mapToGenres(author.getTopGenres()));
 		return authorDetails;
 	}
-
+	
 	private String getImage(String image) {
 		if(image.equals("u_") || image.equals("f_") || image.equals("m_")) {
 			return image;
@@ -271,6 +281,9 @@ public class ClientService {
 	}
 
 	private Set<String> parseRoles(String listOfRoles) {
+		if (listOfRoles == null) {
+			return new HashSet<String>();
+		}
 		String[] splitRoles = listOfRoles.split(", ");
 		
 		return IntStream.range(0, splitRoles.length)
@@ -278,13 +291,12 @@ public class ClientService {
 			.collect(toSet());
 	}
 	
-
 	private BookDetails translateAuthorsCode(BookDetails book) {
 		String[] authorsWithRoles = book.getAuthors().split(", ");
 		List<com.fantasyLibrary.models.response.Author> authors = new ArrayList<com.fantasyLibrary.models.response.Author>();
 		for(String authorWithRoles: authorsWithRoles) {
 			String[] split = authorWithRoles.split("[|]");
-			Author details = mapOfAuthors.get(Long.valueOf(split[0]));
+			CloneAuthor details = mapOfAuthors.get(Long.valueOf(split[0]));
 			String role = mapOfRoles.get(Long.valueOf(split[1]));
 			String fullName = details.getFirstName() + " " + details.getLastName(); 
 			authors.add(new com.fantasyLibrary.models.response.Author(fullName, role));

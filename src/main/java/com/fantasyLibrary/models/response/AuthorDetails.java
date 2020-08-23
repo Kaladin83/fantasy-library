@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 public class AuthorDetails {
-	private String firtsName;
+	private String firstName;
 	
 	private String lastName;
 	
@@ -25,13 +25,15 @@ public class AuthorDetails {
 	private String goodreadsUrl;
 	
 	private Set<String> roles;
+	
+	private List<Genre> topGenres;
 
-	public String getFirtsName() {
-		return firtsName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirtsName(String firtsName) {
-		this.firtsName = firtsName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -113,5 +115,12 @@ public class AuthorDetails {
 	public void setTextReviewsCount(Integer textReviewsCount) {
 		this.textReviewsCount = textReviewsCount;
 	}
-	
+
+	public List<Genre> getTopGenres() {
+		return topGenres;
+	}
+
+	public void setTopGenres(List<Genre> topGenres) {
+		this.topGenres = topGenres;
+	}
 }

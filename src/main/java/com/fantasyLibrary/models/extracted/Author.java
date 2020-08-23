@@ -31,4 +31,9 @@ public class Author {
 	public void setRole(long role) {
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return "Author [id=" + id + ", name=" + name + ", role=" + role + "]";
+	}
 }

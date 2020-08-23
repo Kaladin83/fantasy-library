@@ -104,8 +104,8 @@ public class Details {
 	@JsonProperty
 	private List<Key> works;
 	
-	@JsonProperty("table_of_contents")
-	private List<Content> tableOfContents; 
+//	@JsonProperty("table_of_contents")
+//	private List<Content> tableOfContents; 
 	
 	private List<Integer> covers;
 	
@@ -365,13 +365,13 @@ public class Details {
 		this.works = works;
 	}
 
-	public List<Content> getTableOfContents() {
-		return tableOfContents;
-	}
-
-	public void setTableOfContents(List<Content> tableOfContents) {
-		this.tableOfContents = tableOfContents;
-	}
+//	public List<Content> getTableOfContents() {
+//		return tableOfContents;
+//	}
+//
+//	public void setTableOfContents(List<Content> tableOfContents) {
+//		this.tableOfContents = tableOfContents;
+//	}
 
 	public List<Integer> getCovers() {
 		return covers;

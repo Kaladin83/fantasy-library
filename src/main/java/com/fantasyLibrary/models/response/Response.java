@@ -3,16 +3,16 @@ package com.fantasyLibrary.models.response;
 import java.util.List;
 
 public class Response {
-	private AuthorDetails author;
+	private AuthorDetails info;
 	
 	private List<BookDetails> books;
 
-	public AuthorDetails getAuthor() {
-		return author;
+	public AuthorDetails getInfo() {
+		return info;
 	}
 
-	public void setAuthor(AuthorDetails author) {
-		this.author = author;
+	public void setInfo(AuthorDetails info) {
+		this.info = info;
 	}
 
 	public List<BookDetails> getBooks() {

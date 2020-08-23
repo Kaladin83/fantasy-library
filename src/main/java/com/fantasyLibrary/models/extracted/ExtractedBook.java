@@ -36,6 +36,8 @@ public class ExtractedBook {
 	private String language;
 	
 	private String originalTitle;
+	
+	private List<String> genres;
 
 	public String getTitle() {
 		return title;
@@ -155,5 +157,13 @@ public class ExtractedBook {
 
 	public void setTextReviewsCount(Integer textReviewsCount) {
 		this.textReviewsCount = textReviewsCount;
+	}
+
+	public List<String> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(List<String> genres) {
+		this.genres = genres;
 	}
 }

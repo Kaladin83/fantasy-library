@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fantasyLibrary.models.response.Response;
 import com.fantasyLibrary.services.ClientService;
+import com.fantasyLibrary.services.CloneClientService;
 
 
 @RestController
@@ -17,12 +18,16 @@ public class MainController {
 	@Autowired
 	private ClientService clientService;
 
+	@Autowired
+	private CloneClientService cloneClientService;
+	
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(value = "/books")
 	public List<Response> getBooks() {
 		List<Response> responses;
-		responses = clientService.getAllBooks();
-		
+		//responses = clientService.getAllBooks();
+		//responses = cloneClientService.getAllAuthors();
+		responses = cloneClientService.getAllBooks();
 		return responses;
 	}
 }

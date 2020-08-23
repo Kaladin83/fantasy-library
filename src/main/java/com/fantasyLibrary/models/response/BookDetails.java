@@ -14,6 +14,7 @@ public class BookDetails {
 	private List<Series> series;
 	private List<Edition> editions;
 	private List<Author> ListOfAuthors;
+	private List<Genre> ListOfGenres;
 	private Float averageRating;
 	private Integer ratingCount;
 	private Integer textReviewsCount;
@@ -146,5 +147,13 @@ public class BookDetails {
 
 	public void setTextReviewsCount(Integer textReviewsCount) {
 		this.textReviewsCount = textReviewsCount;
+	}
+
+	public List<Genre> getListOfGenres() {
+		return ListOfGenres;
+	}
+
+	public void setListOfGenres(List<Genre> listOfGenres) {
+		ListOfGenres = listOfGenres;
 	}
 }

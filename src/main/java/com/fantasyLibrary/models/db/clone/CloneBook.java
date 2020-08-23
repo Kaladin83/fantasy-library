@@ -1,4 +1,4 @@
-package com.fantasyLibrary.models.db;
+package com.fantasyLibrary.models.db.clone;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Book {
+public class CloneBook {
 	@Id()
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "book_id", columnDefinition ="serial")

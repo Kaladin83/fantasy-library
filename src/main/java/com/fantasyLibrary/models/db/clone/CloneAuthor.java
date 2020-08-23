@@ -1,12 +1,15 @@
-package com.fantasyLibrary.models.db;
+package com.fantasyLibrary.models.db.clone;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.fantasyLibrary.models.db.Author;
 
 @Entity
-public class Author {
+@Table(name = "clone_author")
+public class CloneAuthor {
 	@Id
 	@Column(name = "goodreads_id")
 	private Long goodreadsId;
@@ -44,10 +47,10 @@ public class Author {
 	@Column(name = "top_genres")
 	private String topGenres;
 	
-	public Author() {
+	public CloneAuthor() {
 	}
 
-	public Author(String firstName, String lastName, Long goodreadsId) {
+	public CloneAuthor(String firstName, String lastName, Long goodreadsId) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.goodreadsId = goodreadsId;
@@ -176,7 +179,7 @@ public class Author {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Author other = (Author) obj;
+		CloneAuthor other = (CloneAuthor) obj;
 		if (averageRating == null) {
 			if (other.averageRating != null)
 				return false;

@@ -14,6 +14,13 @@ public class Mappers {
 	
 	private static Map<String, Integer> mapOfNumbers = populateMapOfNumbers();
 	private static Map<String, Integer> mapOfRomanNumbers = populateMapOfRomanNumbers();
+	
+	private static Map<String, String> mapOfFantasyGenres = populateMapOfFantasyGenres();
+	
+	private static Map<String, String> mapOfImportantGenres = populateMapOfImportantGenres();
+	
+	private static Map<String, String> mapOfOtherGenres = populateMapOfOtherGenres();
+	
 
 	private static List<String> listOfPublishers = List.of("abelard science fiction", "ace books", "advent:publishers",
 			"aqueduct press", "arcadia house", "arkham house", "avalon science fiction", "badger books", "baen books",
@@ -44,8 +51,94 @@ public class Mappers {
 	public static List<String> getListOfPublishers() {
 		return listOfPublishers;
 	}
+
+	private static Map<String, String> populateMapOfFantasyGenres() {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("fantasia", "Fantasy");
+		map.put("fantasy", "Fantasy");
+		map.put("epic-fantasy", "Epic Fantasy");
+		map.put("high-fantasy", "Epic Fantasy");
+		map.put("dark-fantasy", "Grimdark");
+		map.put("grimdark", "Grimdark");
+		map.put("gritty-fantasy", "Grimdark");
+		map.put("urban-fantasy", "Urban Fantasy");
+		map.put("paranormal", "Urban Fantasy");
+		map.put("sword-and-sorcery", "Sword and Sorcery");
+		map.put("low-fantasy", "Low Fantasy");
+		map.put("steampunk‎", "Steampunk‎");
+		map.put("fairy-tales‎", "Fairy Tales‎");
+		map.put("heroic-fantasy", "Heroic Fantasy");
+		map.put("comics", "Comics");
+		map.put("graphic-novel", "Graphic Novel");
+		map.put("graphic-novels", "Graphic Novel");
+		
+		return map;
+	}
 	
+	private static Map<String, String> populateMapOfImportantGenres() {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("young-adult", "Young Adult");
+		map.put("ya", "Young Adult");
+		map.put("adult", "Adult");
+		map.put("middle-grade", "Middle Grade");
+		map.put("children", "Children");
+		map.put("anthology", "Anthology");
+		map.put("anthologies", "Anthology");
+		map.put("collection", "Anthology");
+		
+		return map;
+	}
 	
+	private static Map<String, String> populateMapOfOtherGenres() {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("thriller", "Thriller");
+		map.put("harem", "Harem");
+		map.put("sex", "Erotica");
+		map.put("sci-fi", "Sci-fi");
+		map.put("erotica", "Erotica");
+		map.put("humour", "Humour");
+		map.put("historical-fiction", "Historical Fiction");
+		map.put("mythology", "Mythology");
+		map.put("myths", "Mythology");
+		map.put("dystopia", "Dystopia");
+		map.put("post-apocalyptic", "Dystopia");
+		map.put("drama", "Drama");
+		map.put("horror", "Horror");
+		map.put("romance", "Romance");
+		map.put("lgbt", "LGBT");
+		map.put("lgbtq", "LGBT");
+		map.put("military", "Military");
+
+		return map;
+	}
+
+	public static Map<String, String> getMapOfFantasyGenres() {
+		return mapOfFantasyGenres;
+	}
+
+	public static void setMapOfFantasyGenres(Map<String, String> mapOfFantasyGenres) {
+		Mappers.mapOfFantasyGenres = mapOfFantasyGenres;
+	}
+
+	public static Map<String, String> getMapOfOtherGenres() {
+		return mapOfOtherGenres;
+	}
+
+	public static Map<String, String> getMapOfImportantGenres() {
+		return mapOfImportantGenres;
+	}
+
+	public static void setMapOfImportantGenres(Map<String, String> mapOfImportantGenres) {
+		Mappers.mapOfImportantGenres = mapOfImportantGenres;
+	}
+
+	public static void setMapOfOtherGenres(Map<String, String> mapOfOtherGenres) {
+		Mappers.mapOfOtherGenres = mapOfOtherGenres;
+	}
+
 	private static Map<String, String> populateKeyWords() {
 		Map<String, String> map = new HashMap<>();
 		map.put("part", "Part");

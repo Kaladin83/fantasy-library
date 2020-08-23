@@ -81,7 +81,12 @@ public class AuthorsETLService {
 		if(authorShowResponse != null && authorShowResponse.getAuthor() != null) {
 			String[] names = Utils.distructAuthorName(authorShowResponse.getAuthor().getName().strip());
 			String image = !authorShowResponse.getAuthor().getLargeImageUrl().contains("nophoto")?authorShowResponse.getAuthor().getLargeImageUrl()
-					.replace(Cover.GR_AUTHOR_PREFIX.value(), ""):"";
+					.replace(Cover.GR_AUTHOR_PREFIX.value(), ""): authorShowResponse.getAuthor().getLargeImageUrl()
+					.replace(Cover.GR_AUTHOR_PREFIX_NO_PHOTO.value(), "");
+			if (image.substring(0,2).equals("f_") || image.substring(0,2).equals("m_") || 
+					image.substring(0,2).equals("u_")) {
+				image = image.substring(0,2);
+			}
 			author.setBornAt(authorShowResponse.getAuthor().getBornAt());
 			author.setDiedAt(authorShowResponse.getAuthor().getDiedAt());
 			author.setHometown(authorShowResponse.getAuthor().getHometown());

@@ -24,6 +24,7 @@ public class Utils {
 		}
 		catch(Exception e) {
 			printTime("End");
+			System.out.println("URL -> "+ url);
 			System.out.println(e);
 		}
 		return response;
@@ -74,7 +75,7 @@ public class Utils {
 		int endInx = str.length() - 1;
 		String start = !Character.isLetterOrDigit(str.charAt(0))? str.substring(1): str;
 		String end = !Character.isLetterOrDigit(str.charAt(endInx))? str.substring(0, endInx): str;
-		String both = !Character.isLetterOrDigit(end.charAt(0))? end.substring(1): end;
+		String both = end.equals("")? "": !Character.isLetterOrDigit(end.charAt(0))? end.substring(1): end;
 		
 		switch (whereToRemove) {
 			case START: return start;

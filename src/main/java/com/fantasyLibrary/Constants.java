@@ -2,6 +2,7 @@ package com.fantasyLibrary;
 
 public class Constants {
 	public static String BOXED_SET = "Boxed Set"; 
+	
 	public enum Remove{
 		START, END , BOTH;
 	}
@@ -54,8 +55,14 @@ public class Constants {
 		GR_SUFIX_CHANGE("._SX250_.jpg"),
 		OL_PREFIX("https://covers.openlibrary.org/b/id/"),
 		OL_SUFIX("-L.jpg"),
-		GR_AUTHOR_PREFIX("https://images.gr-assets.com/authors/");
-		
+		GR_AUTHOR_PREFIX("https://images.gr-assets.com/authors/"),
+		GR_AUTHOR_PREFIX_NO_PHOTO("https://s.gr-assets.com/assets/nophoto/user/");
+		//https://s.gr-assets.com/assets/nophoto/user/f_200x266-3061b784cc8e7f021c6430c9aba94587.png
+		//https://s.gr-assets.com/assets/nophoto/user/u_200x266-e183445fd1a1b5cc7075bb1cf7043306.png
+		//https://s.gr-assets.com/assets/nophoto/user/m_200x266-d279b33f8eec0f27b7272477f09806be.png
+		//https://s.gr-assets.com/assets/nophoto/user/f_200x266-3061b784cc8e7f021c6430c9aba94587.png
+		//https://s.gr-assets.com/assets/nophoto/user/f_200x266-3061b784cc8e7f021c6430c9aba94587.png
+		//https://s.gr-assets.com/assets/nophoto/user/u_200x266-e183445fd1a1b5cc7075bb1cf7043306.png
 		private String val;
 		
 		private Cover(String val) {
@@ -64,6 +71,25 @@ public class Constants {
 		
 		public String value() {
 			return val;
+		}
+	}
+	
+	public enum SpecialWords{
+		ANTHOLOGY("anthology"),
+		NOVELA("novela"),
+		NOVEL("novel"),
+		COLLECTION("collection"),
+		PLAY("play"),
+		GRAPHIC("graphic");
+		
+		private String value;
+		
+		private SpecialWords(String value) {
+			this.value = value;
+		}
+		
+		public String value() {
+			return value;
 		}
 	}
 }
